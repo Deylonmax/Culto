@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relatório de Culto</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #e6f0fa;
+      color: #333;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header img {
+      height: 60px;
+    }
+    #dataDisplay {
+      font-size: 16px;
+      color: #444;
+    }
+    h1 {
+      color: #003366;
+      margin-top: 20px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #004d99;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-right: 10px;
+    }
+    button:hover {
+      background-color: #003366;
+    }
+    #relatorio {
+      background: white;
+      padding: 20px;
+      margin-top: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #999;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #777;
+      font-size: 14px;
+    }
+    @media print {
+      button, input, textarea {
+        display: none;
+      }
+      body {
+        background: white;
+        margin: 0;
+      }
+      footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        font-size: 12px;
+        color: #888;
+        text-align: center;
+      }
+    }
+    @media (max-width: 600px) {
+      body {
+        margin: 10px;
+      }
+      button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      #dataDisplay {
+        align-self: flex-end;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="sara.png" alt="Logo Sara">
+    <div id="dataDisplay"></div>
+  </header>
+
+  <h1>Relatório de Culto</h1>
+
+  <label>Recepção:</label>
+  <input type="text" id="recepcao">
+
+  <label>Data do culto:</label>
+  <input type="date" id="data">
+
+  <label>Título da Palavra:</label>
+  <input type="text" id="titulo">
+
+  <label>Versículo:</label>
+  <input type="text" id="versiculo">
+
+  <h2>Quantidade de participantes:</h2>
+
+  <label>Homens:</label>
+  <input type="number" id="homens">
+
+  <label>Homens Jovens:</label>
+  <input type="number" id="homensJovens">
+
+  <label>Mulheres:</label>
+  <input type="number" id="mulheres">
+
+  <label>Mulheres Jovens:</label>
+  <input type="number" id="mulheresJovens">
+
+  <label>Visitantes:</label>
+  <input type="number" id="visitantes">
+
+  <label>Crianças:</label>
+  <input type="number" id="criancas">
+
+  <button onclick="gerarRelatorio()">Gerar Relatório</button>
+  <button onclick="window.print()">Imprimir</button>
+
+  <div id="relatorio"></div>
+
+  <footer>
+    Em desenvolvimento por <strong>Deylon Max</strong>
+  </footer>
+
+  <script>
+    function formatarDataBR(dataISO) {
+      const dataObj = new Date(dataISO);
+      if (isNaN(dataObj)) return '';
+      const dia = String(dataObj.getDate()).padStart(2, '0');
+      const mes = String(dataObj.getMonth() + 1).padStart(2, '0');
+      const ano = dataObj.getFullYear();
+      return `${dia}/${mes}/${ano}`;
+    }
+
+    function gerarRelatorio() {
+      const recepcao = document.getElementById("recepcao").value;
+      const data = document.getElementById("data").value;
+      const titulo = document.getElementById("titulo").value;
+      const versiculo = document.getElementById("versiculo").value;
+
+      const homens = document.getElementById("homens").value;
+      const homensJovens = document.getElementById("homensJovens").value;
+      const mulheres = document.getElementById("mulheres").value;
+      const mulheresJovens = document.getElementById("mulheresJovens").value;
+      const visitantes = document.getElementById("visitantes").value;
+      const criancas = document.getElementById("criancas").value;
+
+      const total = [homens, homensJovens, mulheres, mulheresJovens, visitantes, criancas]
+        .map(n => parseInt(n) || 0)
+        .reduce((a, b) => a + b, 0);
+
+      const html = `
+        <h2>Relatório Final</h2>
+        <p><strong>Recepção:</strong> ${recepcao}</p>
+        <p><strong>Data:</strong> ${formatarDataBR(data)}</p>
+        <p><strong>Palavra ministrada:</strong> ${titulo}</p>
+        <p><strong>Versículo:</strong> ${versiculo}</p>
+
+        <h3>Participantes:</h3>
+        <ul>
+          ${homens ? `<li>Homens: ${homens}</li>` : ""}
+          ${homensJovens ? `<li>Homens Jovens: ${homensJovens}</li>` : ""}
+          ${mulheres ? `<li>Mulheres: ${mulheres}</li>` : ""}
+          ${mulheresJovens ? `<li>Mulheres Jovens: ${mulheresJovens}</li>` : ""}
+          ${visitantes ? `<li>Visitantes: ${visitantes}</li>` : ""}
+          ${criancas ? `<li>Crianças: ${criancas}</li>` : ""}
+        </ul>
+
+        <h3>Total Geral: ${total} participante${total === 1 ? '' : 's'}</h3>
+      `;
+      document.getElementById("relatorio").innerHTML = html;
+      document.getElementById("dataDisplay").innerText = `Data: ${formatarDataBR(data)}`;
+    }
+  </script>
+</body>
+</html>
