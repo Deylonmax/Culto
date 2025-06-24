@@ -1,154 +1,189 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Relatório de Culto</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RELATÓRIO SNT MARITUBA PA</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      background-color: #e6f0fa;
-      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 10px;
+      background-color: #f4f9ff;
+      color: #222;
+      font-size: 15px;
     }
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      text-align: center;
+      margin-bottom: 15px;
     }
     header img {
-      height: 60px;
+      height: 50px;
+      margin: 0 auto 8px;
     }
-    #dataDisplay {
-      font-size: 16px;
-      color: #444;
-    }
-    h1 {
+    header h1 {
+      font-size: 24px;
       color: #003366;
-      margin-top: 20px;
+      margin: 0;
+    }
+    header p {
+      margin-top: 2px;
+      font-size: 14px;
+      font-style: italic;
+      color: #444;
     }
     label {
       font-weight: bold;
+      font-size: 14px;
     }
-    input, textarea {
+    input {
       width: 100%;
-      padding: 8px;
-      margin-bottom: 10px;
+      padding: 6px;
+      margin-bottom: 8px;
       border-radius: 5px;
       border: 1px solid #ccc;
-      box-sizing: border-box;
+      font-size: 14px;
     }
     button {
       background-color: #004d99;
       color: white;
-      padding: 10px 20px;
+      padding: 8px 16px;
       border: none;
-      border-radius: 6px;
+      border-radius: 5px;
       cursor: pointer;
-      margin-top: 10px;
-      margin-right: 10px;
+      font-size: 14px;
+      margin-top: 6px;
+      margin-right: 8px;
     }
     button:hover {
       background-color: #003366;
     }
-    #relatorio {
-      background: white;
+    #relatorioWrapper {
+      border: 3px solid #003366;
       padding: 20px;
-      margin-top: 30px;
+      margin-top: 20px;
       border-radius: 10px;
-      box-shadow: 0 0 10px #999;
+      background: white;
+    }
+    #relatorio h2 {
+      text-align: center;
+      color: #003366;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .info, .participantes {
+      background-color: #f0f4fa;
+      border: 1px solid #d0dce7;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-bottom: 14px;
+    }
+    .participantes ul {
+      list-style: none;
+      padding-left: 0;
+      font-size: 14px;
+    }
+    .participantes li {
+      margin: 4px 0;
+    }
+    .total {
+      font-size: 16px;
+      font-weight: bold;
+      color: #003366;
+      text-align: center;
+      margin-top: 12px;
+    }
+    #grafico {
+      max-width: 400px;
+      margin: 20px auto;
     }
     footer {
       text-align: center;
-      margin-top: 40px;
+      margin-top: 30px;
       color: #777;
-      font-size: 14px;
+      font-size: 13px;
     }
     @media print {
-      button, input, textarea {
-        display: none;
-      }
       body {
         background: white;
         margin: 0;
+        font-size: 13px;
+      }
+      header, label, input, button {
+        display: none !important;
+      }
+      #relatorioWrapper {
+        border: 2px solid #000;
+        padding: 10px;
+        border-radius: 0;
       }
       footer {
         position: fixed;
         bottom: 0;
         width: 100%;
-        font-size: 12px;
-        color: #888;
+        font-size: 11px;
+        color: #999;
         text-align: center;
-      }
-    }
-    @media (max-width: 600px) {
-      body {
-        margin: 10px;
-      }
-      button {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 10px;
-      }
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      #dataDisplay {
-        align-self: flex-end;
-        margin-top: 10px;
       }
     }
   </style>
 </head>
 <body>
-
   <header>
-    <img src="sara.png" alt="Logo Sara">
-    <div id="dataDisplay"></div>
+    <img src="sara.png" alt="Logo Sara" />
+    <h1>RELATÓRIO DO CULTO</h1>
+    <p>SNT MARITUBA - PA</p>
   </header>
 
-  <h1>Relatório de Culto</h1>
+  <label>Reunião:</label>
+  <input type="text" id="reuniao" />
+
+  <label>Campanha:</label>
+  <input type="text" id="campanha" />
 
   <label>Recepção:</label>
-  <input type="text" id="recepcao">
+  <input type="text" id="recepcao" />
+
+  <label>Referência Bíblica:</label>
+  <input type="text" id="versiculo" />
+
+  <label>Abriram Campanha:</label>
+  <input type="text" id="abriram" />
+
+  <label>Ministrante:</label>
+  <input type="text" id="ministrante" />
 
   <label>Data do culto:</label>
-  <input type="date" id="data">
-
-  <label>Título da Palavra:</label>
-  <input type="text" id="titulo">
-
-  <label>Versículo:</label>
-  <input type="text" id="versiculo">
-
-  <h2>Quantidade de participantes:</h2>
+  <input type="date" id="data" />
 
   <label>Homens:</label>
-  <input type="number" id="homens">
+  <input type="number" id="homens" />
 
   <label>Homens Jovens:</label>
-  <input type="number" id="homensJovens">
+  <input type="number" id="homensJovens" />
 
   <label>Mulheres:</label>
-  <input type="number" id="mulheres">
+  <input type="number" id="mulheres" />
 
   <label>Mulheres Jovens:</label>
-  <input type="number" id="mulheresJovens">
+  <input type="number" id="mulheresJovens" />
 
   <label>Visitantes:</label>
-  <input type="number" id="visitantes">
+  <input type="number" id="visitantes" />
 
   <label>Crianças:</label>
-  <input type="number" id="criancas">
+  <input type="number" id="criancas" />
 
   <button onclick="gerarRelatorio()">Gerar Relatório</button>
   <button onclick="window.print()">Imprimir</button>
 
-  <div id="relatorio"></div>
+  <div id="relatorioWrapper">
+    <div id="relatorio"></div>
+    <canvas id="grafico"></canvas>
+  </div>
 
   <footer>
-    Em desenvolvimento por <strong>Deylon Max</strong>
+    Em desenvolvimento por <strong>Deylon Max - (91) 9 9840-5674</strong>
   </footer>
 
   <script>
@@ -162,43 +197,68 @@
     }
 
     function gerarRelatorio() {
+      const reuniao = document.getElementById("reuniao").value;
+      const campanha = document.getElementById("campanha").value;
       const recepcao = document.getElementById("recepcao").value;
-      const data = document.getElementById("data").value;
-      const titulo = document.getElementById("titulo").value;
       const versiculo = document.getElementById("versiculo").value;
+      const abriram = document.getElementById("abriram").value;
+      const ministrante = document.getElementById("ministrante").value;
+      const data = document.getElementById("data").value;
 
-      const homens = document.getElementById("homens").value;
-      const homensJovens = document.getElementById("homensJovens").value;
-      const mulheres = document.getElementById("mulheres").value;
-      const mulheresJovens = document.getElementById("mulheresJovens").value;
-      const visitantes = document.getElementById("visitantes").value;
-      const criancas = document.getElementById("criancas").value;
+      const homens = parseInt(document.getElementById("homens").value || 0);
+      const homensJovens = parseInt(document.getElementById("homensJovens").value || 0);
+      const mulheres = parseInt(document.getElementById("mulheres").value || 0);
+      const mulheresJovens = parseInt(document.getElementById("mulheresJovens").value || 0);
+      const visitantes = parseInt(document.getElementById("visitantes").value || 0);
+      const criancas = parseInt(document.getElementById("criancas").value || 0);
 
-      const total = [homens, homensJovens, mulheres, mulheresJovens, visitantes, criancas]
-        .map(n => parseInt(n) || 0)
-        .reduce((a, b) => a + b, 0);
+      const total = homens + homensJovens + mulheres + mulheresJovens + visitantes + criancas;
 
       const html = `
         <h2>Relatório Final</h2>
-        <p><strong>Recepção:</strong> ${recepcao}</p>
-        <p><strong>Data:</strong> ${formatarDataBR(data)}</p>
-        <p><strong>Palavra ministrada:</strong> ${titulo}</p>
-        <p><strong>Versículo:</strong> ${versiculo}</p>
-
-        <h3>Participantes:</h3>
-        <ul>
-          ${homens ? `<li>Homens: ${homens}</li>` : ""}
-          ${homensJovens ? `<li>Homens Jovens: ${homensJovens}</li>` : ""}
-          ${mulheres ? `<li>Mulheres: ${mulheres}</li>` : ""}
-          ${mulheresJovens ? `<li>Mulheres Jovens: ${mulheresJovens}</li>` : ""}
-          ${visitantes ? `<li>Visitantes: ${visitantes}</li>` : ""}
-          ${criancas ? `<li>Crianças: ${criancas}</li>` : ""}
-        </ul>
-
-        <h3>Total Geral: ${total} participante${total === 1 ? '' : 's'}</h3>
+        <div class="info">
+          <p><strong>REUNIÃO:</strong> ${reuniao}</p>
+          <p><strong>CAMPANHA:</strong> ${campanha}</p>
+          <p><strong>RECEPÇÃO:</strong> ${recepcao}</p>
+          <p><strong>REF. BÍBLICA:</strong> ${versiculo}</p>
+          <p><strong>ABRIRAM CAMPANHA:</strong> ${abriram}</p>
+          <p><strong>MINISTRANTE:</strong> ${ministrante}</p>
+          <p><strong>DATA:</strong> ${formatarDataBR(data)}</p>
+        </div>
+        <div class="participantes">
+          <h3>Participantes</h3>
+          <ul>
+            ${homens ? `<li><strong>HOMENS:</strong> ${homens}</li>` : ""}
+            ${homensJovens ? `<li><strong>JOVENS HOMENS:</strong> ${homensJovens}</li>` : ""}
+            ${mulheres ? `<li><strong>MULHERES:</strong> ${mulheres}</li>` : ""}
+            ${mulheresJovens ? `<li><strong>JOVENS MULHERES:</strong> ${mulheresJovens}</li>` : ""}
+            ${criancas ? `<li><strong>CRIANÇAS:</strong> ${criancas}</li>` : ""}
+            ${visitantes ? `<li><strong>VISITANTES:</strong> ${visitantes}</li>` : ""}
+          </ul>
+        </div>
+        <div class="total"><strong>TOTAL:</strong> ${total} participante${total === 1 ? '' : 's'}</div>
       `;
       document.getElementById("relatorio").innerHTML = html;
-      document.getElementById("dataDisplay").innerText = `Data: ${formatarDataBR(data)}`;
+
+      const ctx = document.getElementById("grafico").getContext("2d");
+      if (window.pizzaChart) window.pizzaChart.destroy();
+      window.pizzaChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: ['Homens', 'Jovens Homens', 'Mulheres', 'Jovens Mulheres', 'Crianças', 'Visitantes'],
+          datasets: [{
+            data: [homens, homensJovens, mulheres, mulheresJovens, criancas, visitantes],
+            backgroundColor: ['#003366', '#4da6ff', '#cc0000', '#ff66b2', '#ffcc00', '#996633']
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
     }
   </script>
 </body>
